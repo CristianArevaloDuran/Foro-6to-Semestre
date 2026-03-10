@@ -4,7 +4,7 @@ import sql from "./modules/db/connection.js";
 
 // Setup server
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 const app = express()
 app.use(express.json());
