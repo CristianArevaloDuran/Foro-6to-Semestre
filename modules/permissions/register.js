@@ -1,25 +1,22 @@
 const registerPermission = (supabase) => async (req, res) => {
     const {name, slug, description} = req.body;
-    console.log(req.body);
-    
-    const permission = {
-        name: name,
-        slug: slug,
-        description: description
-    }
 
     try {
-        const result = await supabase`
-            insert into permission ${supabase(permission)}
-            returning *
-        `;
+        const {data, error} = await supabase.from('permission').insert([
+            {
+                name: name,
+                slug: slug,
+                description: description
+            }
+        ]).select();
 
-        return res.status(200).json({
+        if(error) throw error;
+
+        return res.status(201).json({
             message: "Permission created",
-            data: result
+            data
         })
     } catch(error) {
-        console.log(error);
         res.status(500).json({
             error
         })

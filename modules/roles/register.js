@@ -1,10 +1,5 @@
 const registerRole = (supabase) => async (req, res) => {
     const {name, description} = req.body;
-    
-    const role = {
-        name: name,
-        description: description
-    }
 
     try {
         const {data, error} = await supabase.from('roles').insert([
