@@ -1,6 +1,6 @@
 import "dotenv/config";
 import express from "express";
-import sql from "./modules/db/connection.js";
+import supabase from "./modules/db/connection.js";
 
 // Setup server
 
@@ -24,11 +24,11 @@ app.get("/vitals", (req, res)=>{
 
 // Permissions
 
-app.post("/register-permission", registerPermission(sql));
+app.post("/register-permission", registerPermission(supabase));
 
 // Roles
 
-app.post("/register-role", registerRole(sql));
+app.post("/register-role", registerRole(supabase));
 
 app.listen(port, ()=>{
     console.log(`API on port http://localhost:${port}`);

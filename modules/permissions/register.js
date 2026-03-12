@@ -1,4 +1,4 @@
-const registerPermission = (sql) => async (req, res) => {
+const registerPermission = (supabase) => async (req, res) => {
     const {name, slug, description} = req.body;
     console.log(req.body);
     
@@ -9,8 +9,8 @@ const registerPermission = (sql) => async (req, res) => {
     }
 
     try {
-        const result = await sql`
-            insert into permission ${sql(permission)}
+        const result = await supabase`
+            insert into permission ${supabase(permission)}
             returning *
         `;
 

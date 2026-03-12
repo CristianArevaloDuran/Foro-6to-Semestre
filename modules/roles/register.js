@@ -1,6 +1,5 @@
-const registerRole = (sql) => async (req, res) => {
+const registerRole = (supabase) => async (req, res) => {
     const {name, description} = req.body;
-    console.log(req.body);
     
     const role = {
         name: name,
@@ -8,14 +7,18 @@ const registerRole = (sql) => async (req, res) => {
     }
 
     try {
-        const result = await sql`
-            insert into roles ${sql(role)}
-            returning *
-        `;
+        const {data, error} = await supabase.from('roles').insert([
+            {
+                name: name,
+                description: description
+            }
+        ]).select();
 
-        return res.status(200).json({
-            message: "Role created",
-            data: result
+        if(error) throw error;
+
+        res.status(201).json({
+            message: 'Role added',
+            data
         })
     } catch(error) {
         console.log(error);
