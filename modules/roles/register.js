@@ -4,10 +4,12 @@ const registerRole = (supabase) => async (req, res) => {
     try {
         const {data, error} = await supabase.from('roles').insert([
             {
-                name: name,
-                description: description
+                name,
+                description
             }
-        ]).select();
+        ])
+        .select()
+        .single();
 
         if(error) throw error;
 
@@ -16,9 +18,9 @@ const registerRole = (supabase) => async (req, res) => {
             data
         })
     } catch(error) {
-        console.log(error);
+        console.error(error);
         res.status(500).json({
-            error
+            error: error.message
         })
     } 
 }
