@@ -24,6 +24,11 @@ steps:
 - script: |
     npm run dev --if-present
   displayName: 'Dev proyecto'
+  env:
+    PORT: $(PORT)
+    DATABASE_URL: $(DATABASE_URL)
+    DB_PASSWORD: $(DB_PASSWORD)
+    CORS_ORIGIN: $(CORS_ORIGIN)
 
 # Paso opcional: Empaquetar archivos para el despliegue
 - task: ArchiveFiles@2
