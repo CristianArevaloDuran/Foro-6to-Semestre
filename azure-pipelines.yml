@@ -19,19 +19,21 @@ steps:
 
 - script: |
     npm run build --if-present
-  displayName: 'Compilar proyecto'
-
-- script: |
-    npm run dev --if-present
-  displayName: 'Dev proyecto'
+  displayName: 'Compilar proyecto (Build)'
   env:
+    # A veces el build necesita variables (ej. Next.js)
     PORT: $(PORT)
     DATABASE_URL: $(DATABASE_URL)
     DB_PASSWORD: $(DB_PASSWORD)
     CORS_ORIGIN: $(CORS_ORIGIN)
 
-# Paso opcional: Empaquetar archivos para el despliegue
+# Opcional: Ejecutar tests antes de empaquetar
+- script: |
+    npm test --if-present
+  displayName: 'Ejecutar Pruebas'
+
 - task: ArchiveFiles@2
+  displayName: 'Comprimir artefactos'
   inputs:
     rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
     includeRootFolder: false
@@ -40,6 +42,7 @@ steps:
     replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publicar el ZIP (Drop)'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
