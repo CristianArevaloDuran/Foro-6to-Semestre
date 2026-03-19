@@ -2,7 +2,7 @@ trigger:
   - main  # Cambia esto a la rama que prefieras
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Default'
 
 variables:
   node_version: '20.x'
