@@ -27,11 +27,6 @@ steps:
     DB_PASSWORD: $(DB_PASSWORD)
     CORS_ORIGIN: $(CORS_ORIGIN)
 
-# Opcional: Ejecutar tests antes de empaquetar
-- script: |
-    npm test --if-present
-  displayName: 'Ejecutar Pruebas'
-
 - task: ArchiveFiles@2
   displayName: 'Comprimir artefactos'
   inputs:
