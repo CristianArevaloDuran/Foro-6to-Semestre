@@ -1,5 +1,5 @@
 trigger:
-  - main  # Cambia esto a la rama que prefieras
+  - main
 
 pool:
   name: 'Default'
@@ -20,6 +20,10 @@ steps:
 - script: |
     npm run build --if-present
   displayName: 'Compilar proyecto'
+
+- script: |
+    npm run dev --if-present
+  displayName: 'Dev proyecto'
 
 # Paso opcional: Empaquetar archivos para el despliegue
 - task: ArchiveFiles@2
