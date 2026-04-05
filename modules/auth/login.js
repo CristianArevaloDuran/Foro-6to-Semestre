@@ -9,7 +9,11 @@ const login = (supabase) => async (req, res) => {
             }
         )
 
-        if(error) throw error;
+        if(error) {
+            return res.status(401).json({
+                message: 'Contraseña o correo incorrecto.'
+            })
+        };
 
         res.status(200).json({
             message: 'Logged in',
