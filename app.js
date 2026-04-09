@@ -23,6 +23,8 @@ import registerPermission from "./modules/permissions/register.js";
 import registerRole from "./modules/roles/register.js";
 import register from "./modules/auth/register.js";
 import login from "./modules/auth/login.js";
+import validateToken from "./modules/auth/validateToken.js";
+import createForum from "./modules/forums/create.js";
 
 
 // Vitals
@@ -51,6 +53,14 @@ app.post("/register", register(supabase));
 
 app.post("/login", login(supabase));
 
+
+// Forums
+
+// -Create
+
+app.post("/create-forum", validateToken(supabase), createForum(supabase));
+
 app.listen(port, ()=>{
     console.log(`API on port http://localhost:${port}`);
 })
+
