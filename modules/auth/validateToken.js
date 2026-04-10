@@ -1,6 +1,4 @@
 const validateToken = (supabase) => async (req, res, next) => {
-    console.log(req.headers.authorization);
-    
     try {
         const authHeader = req.headers.authorization;
 

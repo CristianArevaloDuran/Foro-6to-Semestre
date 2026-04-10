@@ -53,6 +53,14 @@ app.post("/register", register(supabase));
 
 app.post("/login", login(supabase));
 
+// -Verify Token
+
+app.get('/verify-token', validateToken(supabase), (req, res) => {
+    res.status(200).json({
+        valid: true
+    })
+});
+
 
 // Forums
 
