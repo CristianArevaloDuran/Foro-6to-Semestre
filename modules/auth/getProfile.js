@@ -1,21 +1,12 @@
-const login = (supabase) => async (req, res) => {
-    const {email, password} = req.body;
-
+const getProfile = (supabase) => async (req, res) => {
     try {
-        const {data, error} = await supabase.auth.signInWithPassword(
-            {
-                email,
-                password
-            }
-        )
+        const userId = req.user?.id;
 
-        if(error) {
+        if (!userId) {
             return res.status(401).json({
-                message: 'Contraseña o correo incorrecto.'
-            })
-        };
-
-        const userId = data.user.id;
+                message: 'Sesion no valida'
+            });
+        }
 
         // Obtener el rol del usuario
         const { data: userRole, error: userRoleError } = await supabase
@@ -52,22 +43,18 @@ const login = (supabase) => async (req, res) => {
             }
         }
 
-        res.status(200).json({
-            message: 'Logged in',
-            user: data.user,
-            token_type: 'Bearer',
-            access_token: data.session.access_token,
+        return res.status(200).json({
+            user: req.user,
             role,
             permissions
-        })
-
-    } catch(error) {
+        });
+    } catch (error) {
         console.error(error);
-        res.status(500).json({
-            message: 'Error while logging in',
+        return res.status(500).json({
+            message: 'Error al obtener el perfil',
             error: error.message
-        })
+        });
     }
-}
+};
 
-export default login;
+export default getProfile;

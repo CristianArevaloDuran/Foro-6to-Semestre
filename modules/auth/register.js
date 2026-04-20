@@ -6,7 +6,7 @@ const register = (supabase) => async (req, res) => {
         // Verify username is unique
 
         const {data: userNameData, error: userNameError} = await supabase
-        .from('profiles')
+        .from('user_role')
         .select('id')
         .eq('username', username)
         .limit(1);        
@@ -46,7 +46,7 @@ const register = (supabase) => async (req, res) => {
 
         const userId = data.user.id;
 
-        const {data: profileData, error: profileError} = await supabase.from('profiles').insert([
+        const {data: profileData, error: profileError} = await supabase.from('user_role').insert([
             {
                 id: userId,
                 username: username,

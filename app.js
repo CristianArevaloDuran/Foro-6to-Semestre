@@ -24,8 +24,7 @@ import registerRole from "./modules/roles/register.js";
 import register from "./modules/auth/register.js";
 import login from "./modules/auth/login.js";
 import validateToken from "./modules/auth/validateToken.js";
-import createForum from "./modules/forums/create.js";
-
+import getProfile from "./modules/auth/getProfile.js";
 
 // Vitals
 
@@ -61,12 +60,22 @@ app.get('/verify-token', validateToken(supabase), (req, res) => {
     })
 });
 
+// -Get user data
+
+app.get('/me', validateToken(supabase), getProfile(supabase));
+
 
 // Forums
+import createForum from "./modules/forums/create.js";
+import getForums from "./modules/forums/getForums.js";
 
 // -Create
 
 app.post("/create-forum", validateToken(supabase), createForum(supabase));
+
+// -Get all forums
+
+app.get('/forums', getForums(supabase));
 
 app.listen(port, ()=>{
     console.log(`API on port http://localhost:${port}`);
