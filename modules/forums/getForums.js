@@ -3,6 +3,7 @@ const getForums = (supabase) => async (req, res) => {
         const {data, error} = await supabase
             .from('subforum')
             .select('*, profiles!subforum_created_by_fkey(*)')
+            .order('created_at', {ascending: false})
 
         
         if(error) {
